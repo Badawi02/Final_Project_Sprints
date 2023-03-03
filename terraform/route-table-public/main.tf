@@ -14,3 +14,7 @@ resource "aws_route_table_association" "a" {
   subnet_id      = var.subnetID
   route_table_id = aws_route_table.route-table.id
 }
+resource "aws_route_table_association" "b" {
+  subnet_id      = var.subnetID_2
+  route_table_id = aws_route_table.route-table.id
+}
