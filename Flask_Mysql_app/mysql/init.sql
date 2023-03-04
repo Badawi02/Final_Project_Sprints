@@ -10,4 +10,5 @@ INSERT INTO test_table
   (name, color)
 VALUES
   ('dev', 'blue'),
-  ('pro', 'yellow');
+  ('pro', 'yellow'),
+  ('ahmed', 'badawi');
