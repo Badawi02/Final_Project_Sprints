@@ -23,6 +23,13 @@ resource "aws_security_group" "allow_tls" {
     cidr_blocks      = [ var.cidr_security_group ]
   }
 
+  ingress {
+    from_port        = var.Ports_security_group[4]
+    to_port          = var.Ports_security_group[4]
+    protocol         = var.Protocol_security_group[0]
+    cidr_blocks      = [ var.cidr_security_group ]
+  }
+
   egress {
     from_port        = var.Ports_security_group[2]
     to_port          = var.Ports_security_group[2]
