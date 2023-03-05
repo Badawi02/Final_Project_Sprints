@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-deployment
+spec:
+  selector:
+    matchLabels:
+      name: my-mysql 
+  serviceName: "mysql-services"
+  replicas: 2 
+  minReadySeconds: 10 
+  template:
+    metadata:
+      labels:
+        name: my-mysql 
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql-container
+        image: 636094856180.dkr.ecr.us-east-1.amazonaws.com/mysql:latest
+        resources:
+        env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          value: "root"
+        volumeMounts:
+            - name: app-data
+              mountPath: /app_volume
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: app-pv-claim

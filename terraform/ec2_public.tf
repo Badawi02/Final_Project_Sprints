@@ -7,4 +7,5 @@ module "ec2_public" {
   secGroupId = [module.security_group_public.security_group_id]
   public_ec2 = "public_ec2"
   userData = file("userData.tpl")
+
 }

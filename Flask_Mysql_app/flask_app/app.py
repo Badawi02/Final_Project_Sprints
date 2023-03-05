@@ -10,7 +10,7 @@ def test_table() -> List[Dict]:
     config = {
         'user': 'root',
         'password': 'root',
-        'host': 'db',
+        'host': 'mysql-services',
         'port': '3306',
         'database': 'devopsroles'
     }
