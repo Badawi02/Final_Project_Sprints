@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-container
-        image: 636094856180.dkr.ecr.us-east-1.amazonaws.com/flask_app
+        image: 636094856180.dkr.ecr.us-east-1.amazonaws.com/flask_app:latest
         resources:
         # livenessProbe:
         #   httpGet:
