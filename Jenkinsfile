@@ -27,8 +27,13 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'k8s_cred', variable: 'KUBECONFIG')]) {
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: 'aws_cred',
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
                         sh """
+                            aws eks --region us-east-1 update-kubeconfig --name cluster
                             export BUILD_NUMBER=\$(cat ../flask_app-build-number.txt)
                             mv DeploymentFiles_app/deploy_app.yml DeploymentFiles_app/deploy_app.yml.tmp
                             mv DeploymentFiles_app/deploy_db.yml DeploymentFiles_app/deploy_db.yml.tmp
@@ -36,7 +41,7 @@ pipeline {
                             cat DeploymentFiles_app/deploy_db.yml.tmp | envsubst > DeploymentFiles_app/deploy_db.yml
                             rm -f DeploymentFiles_app/deploy_app.yml.tmp
                             rm -f DeploymentFiles_app/deploy_db.yml.tmp
-                            kubectl apply -f DeploymentFiles_app --kubeconfig=${KUBECONFIG}
+                            kubectl apply -f DeploymentFiles_app
                         """
                     }
                 }
