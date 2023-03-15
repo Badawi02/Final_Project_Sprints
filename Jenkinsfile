@@ -11,7 +11,8 @@ pipeline {
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                         sh """
-                            sudo su
+                            usermod -aG docker $USER
+                            newgrp docker
                             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 636094856180.dkr.ecr.us-east-1.amazonaws.com
                             docker build -t 636094856180.dkr.ecr.us-east-1.amazonaws.com/flask_app:${BUILD_NUMBER} -f Flask_Mysql_app/FlaskApp/Dockerfile
                             docker push 636094856180.dkr.ecr.us-east-1.amazonaws.com/flask_app:${BUILD_NUMBER}
