@@ -24,5 +24,23 @@ pipeline {
                 }
             }
         }
+        stage('deploy') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'k8s_cred', variable: 'KUBECONFIG')]) {
+                        sh """
+                            export BUILD_NUMBER=\$(cat ../flask_app-build-number.txt)
+                            mv DeploymentFiles_app/deploy_app.yml Deployment/deploy_app.yml.tmp
+                            mv DeploymentFiles_app/deploy_db.yml Deployment/deploy_db.yaml.tmp
+                            cat DeploymentFiles_app/deploy_app.yml.tmp | envsubst > Deployment/deploy_app.yml
+                            cat DeploymentFiles_app/deploy_db.yaml.tmp | envsubst > Deployment/deploy_db.yaml
+                            rm -f DeploymentFiles_app/deploy_app.yml.tmp
+                            rm -f DeploymentFiles_app/deploy_db.yaml.tmp
+                            kubectl apply -f DeploymentFiles_app --kubeconfig=${KUBECONFIG}
+                        """
+                    }
+                }
+            }
+        }
     }
 }

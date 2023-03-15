@@ -17,7 +17,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: mysql-container
-        image: 636094856180.dkr.ecr.us-east-1.amazonaws.com/mysql:latest
+        image: 636094856180.dkr.ecr.us-east-1.amazonaws.com/mysql:${BUILD_NUMBER}
         resources:
         env:
         - name: "MYSQL_ROOT_PASSWORD"
