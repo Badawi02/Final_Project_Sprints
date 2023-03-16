@@ -41,7 +41,10 @@ pipeline {
                             cat DeploymentFiles_app/deploy_db.yml.tmp | envsubst > DeploymentFiles_app/deploy_db.yml
                             rm -f DeploymentFiles_app/deploy_app.yml.tmp
                             rm -f DeploymentFiles_app/deploy_db.yml.tmp
+                            kubectl apply -f Doploy_nginx_ingress_controller
                             kubectl apply -f DeploymentFiles_app
+                            sleep 10
+                            kubectl apply -f Deploy_ingress
                         """
                     }
                 }
