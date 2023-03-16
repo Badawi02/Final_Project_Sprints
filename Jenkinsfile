@@ -43,7 +43,7 @@ pipeline {
                             rm -f DeploymentFiles_app/deploy_db.yml.tmp
                             kubectl apply -f Deploy_nginx_ingress_controller
                             kubectl apply -f DeploymentFiles_app
-                            sleep 10
+                            sleep 15
                             kubectl apply -f Deploy_ingress
                         """
                     }
