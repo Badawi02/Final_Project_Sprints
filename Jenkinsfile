@@ -9,7 +9,6 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'Access_key_ID', variable: 'Access_key_ID'), string(credentialsId: 'Secret_access_key', variable: 'Secret_access_key')]){
                         sh """
                             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${USER_ID}.dkr.ecr.us-east-1.amazonaws.com
                             docker build -t flask_app:${BUILD_NUMBER} Flask_Mysql_app/FlaskApp
@@ -21,7 +20,6 @@ pipeline {
                             echo ${BUILD_NUMBER} > ../flask_app-build-number.txt
                             echo ${USER_ID} > ../flask_app-user-id.txt
                         """
-                    }
                 }
             }
         }
