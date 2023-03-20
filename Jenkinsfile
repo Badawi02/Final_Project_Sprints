@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        USER_ID = credentials('user_id')
+    }
     stages {
         stage('build') {
             steps {
