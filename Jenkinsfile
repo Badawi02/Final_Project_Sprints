@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment {
         USER_ID = credentials('user_id')
+        Access_key_ID = credentials('Access_key_ID')
+        Secret_access_key = credentials('Secret_access_key')
     }
     stages {
         stage('build') {
