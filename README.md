@@ -9,9 +9,6 @@
  - Jenkins
  - Bash script
 
-
-![agent]( )
-
 ### Project Details:
 
  - Infrastructure as code using Terraform that builds an environment on AWS
@@ -47,6 +44,9 @@
 ```bash
   terraform apply
 ```
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/0.png)
+
 Now you can check your AWS account, you can see this resources has been created:
 - 1 VPC named "vpc-main".
 - 2 Subnets .
@@ -83,10 +83,16 @@ Now you can check your AWS account, you can see this resources has been created:
     newgrp docker
     docker-compose up
 ```
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/1.png)
 -  then , can access app from browser
 ```bash
     http://<public_ip for ec2>:5002
 ```
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/2.png)
+
+
 ## Install Jenkins on EC2 with ansible :
 - first, Put public ip of EC2 in inventory file
 - Run 
@@ -94,6 +100,8 @@ Now you can check your AWS account, you can see this resources has been created:
     cd ansible
     ansible-playbook -i inventory --private-key ec2_key.pem install_jenkins.yml
 ```
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/3.png)
 -  then , can access jenkins from browser
 ```bash
     http://<public_ip for ec2>:8080
@@ -104,16 +112,28 @@ Now you can check your AWS account, you can see this resources has been created:
 - install suggested plugins
 - create account on jenkins
 - install "cloudbees aws credentials" plugin
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/4.png)
 - create credentials for AWS account in aws credentials and name it "aws_cred"
 - create credentials for github account in username and password
+- create credentials for userId for AWS account in secret text name it "user_id"
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/6.png)
 - create pipeline multibranch
 - cofigure the pipe line to get code from github
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/7.png)
 - configure github account in webhook and put :
+
 ```bash
     http://<public_ip for ec2>:8080/github-webhook/
 ```
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/8.png)
 
-
+- the pipeline will tragger branches and will build the pipeline
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/9.png)
 ## Deploying app to Kubernetes with jenkins :
 - first, SSH to EC2
 - Run 
@@ -128,14 +148,11 @@ That will deploy:
 - ingress nginx controller
 - ingress for routing the app
 - You can show all resources of cluster
-
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/10.png)
 ## Now, you can access the Flask App by hitting the Loadbalancer 
-
-## ScreenShots :
-----------------------------------------------------------------
-![agent]( )
------------------------------------------------------------------
------------------------------------------------------------------
+Output:
+![agent](https://github.com/Badawi02/Final_Project_Sprints/blob/main/ScreenShots/11.png)
 
 ## Contributors:
 - [Ahmed Badawi](https://github.com/Badawi02)
