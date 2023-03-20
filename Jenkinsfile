@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        USER_ID = credentials('user_id')
+    }
     stages {
         stage('build') {
             steps {
@@ -11,13 +13,13 @@ pipeline {
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                         sh """
-                            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 636094856180.dkr.ecr.us-east-1.amazonaws.com
+                            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${USER_ID}.dkr.ecr.us-east-1.amazonaws.com
                             docker build -t flask_app:${BUILD_NUMBER} Flask_Mysql_app/FlaskApp
-                            docker tag flask_app:${BUILD_NUMBER} 636094856180.dkr.ecr.us-east-1.amazonaws.com/flask_app:${BUILD_NUMBER}
-                            docker push 636094856180.dkr.ecr.us-east-1.amazonaws.com/flask_app:${BUILD_NUMBER}
+                            docker tag flask_app:${BUILD_NUMBER} ${USER_ID}.dkr.ecr.us-east-1.amazonaws.com/flask_app:${BUILD_NUMBER}
+                            docker push ${USER_ID}.dkr.ecr.us-east-1.amazonaws.com/flask_app:${BUILD_NUMBER}
                             docker build -t mysql:${BUILD_NUMBER} Flask_Mysql_app/db
-                            docker tag mysql:${BUILD_NUMBER} 636094856180.dkr.ecr.us-east-1.amazonaws.com/mysql:${BUILD_NUMBER}
-                            docker push 636094856180.dkr.ecr.us-east-1.amazonaws.com/mysql:${BUILD_NUMBER}
+                            docker tag mysql:${BUILD_NUMBER} ${USER_ID}.dkr.ecr.us-east-1.amazonaws.com/mysql:${BUILD_NUMBER}
+                            docker push ${USER_ID}.dkr.ecr.us-east-1.amazonaws.com/mysql:${BUILD_NUMBER}
                             echo ${BUILD_NUMBER} > ../flask_app-build-number.txt
                         """
                     }
